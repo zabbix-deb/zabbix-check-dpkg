@@ -21,13 +21,15 @@ case "$1" in
 
     remove|purge)
         rm -rf /usr/share/zabbix/dpkg || true
-        if which invoke-rc.d >/dev/null 2>&1; then
+        if which systemctl >/dev/null 2>&1; then
+            systemctl restart zabbix-agent || true
+        elif which invoke-rc.d >/dev/null 2>&1; then
             invoke-rc.d zabbix-agent stop || true
             invoke-rc.d zabbix-agent start || true
-        else
+        elif [ -e /etc/init.d/zabbix-agent ]; then
             /etc/init.d/zabbix-agent stop || true
             /etc/init.d/zabbix-agent start || true
-        fi        
+        fi
         ;;
 
     failed-upgrade|abort-install|abort-upgrade|disappear|upgrade)
