@@ -1,3 +1,9 @@
+zabbix-check-dpkg (0.1~dev21) focal; urgency=medium
+
+  * Bugfix: uninstall fail
+
+ -- Christoph Hueffelmann <chr@istoph.de>  Thu, 11 Jun 2020 00:11:18 +0200
+
 zabbix-check-dpkg (0.1~dev20) xenial; urgency=medium
 
   * Add all default itoms with zero
