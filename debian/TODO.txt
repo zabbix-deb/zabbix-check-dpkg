@@ -1,2 +1,0 @@
-* count autoremove
-* list the name of waiting packets
