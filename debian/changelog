@@ -1,3 +1,11 @@
+zabbix-check-dpkg (0.1) focal; urgency=medium
+
+  * Update compat
+  * Refactor tabs
+  * Releas
+
+ -- Christoph Hueffelmann <chr@istoph.de>  Wed, 09 Dec 2020 20:37:45 +0100
+
 zabbix-check-dpkg (0.1~dev21) focal; urgency=medium
 
   * Bugfix: uninstall fail
