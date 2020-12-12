@@ -3,7 +3,7 @@ export LANG=C
 
 function run() {
     share="/usr/share/zabbix/dpkg"
-    echo 0 | tee $share/error.log | tee $share/updates.log | tee $share/autoremove.log | tee $share/reboot.log > $share/security.log
+    echo 0 | tee $share/error.log | tee $share/updates.log | tee $share/autoremove.log | tee $share/reboot.log | tee $share/configure.log > $share/security.log
 
     function checkrun() {
         err=0
@@ -35,9 +35,12 @@ function run() {
     #check updates
     tmp=$(mktemp)
     trap "rm -f $tmp" 0 1 2 5 15
-    apt-get upgrade -s 2>/dev/null > $tmp || (echo $? > $share/error.log; exit 2)
+    LANG=C apt-get upgrade -s 2>/dev/null > $tmp || (echo $? > $share/error.log; exit 2)
     grep -vi security $tmp | grep ^Inst | wc -l > $share/updates.log
     grep -i security $tmp | grep ^Inst | wc -l > $share/security.log
+    if [ "$(grep -q 'not fully installed' | wc -l)" -gt "0" ]; then
+        grep 'not fully installed' $tmp | head -n1 | awk '{print $1}' > $share/configure.log
+    fi
     apt-get autoremove -s 2>/dev/null | grep ^Remv | wc -l > $share/autoremove.log
 }
 
